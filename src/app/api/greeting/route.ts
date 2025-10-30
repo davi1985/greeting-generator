@@ -21,7 +21,14 @@ export async function POST(req: NextRequest) {
   const urls: string[] = []
 
   const uploadDir = join(process.cwd(), 'public', 'uploads')
-  await mkdir(uploadDir, { recursive: true })
+
+  // Criar pasta uploads (funciona tanto local quanto na Vercel)
+  try {
+    await mkdir(uploadDir, { recursive: true })
+  } catch (error) {
+    console.error('Erro ao criar pasta uploads:', error)
+    // Continuar mesmo se não conseguir criar a pasta
+  }
 
   for (const file of files) {
     // Validar se é uma imagem
