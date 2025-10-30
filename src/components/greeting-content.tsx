@@ -13,13 +13,13 @@ export const GreetingContent = ({ name, message, sender }: Props) => {
 
   return (
     <div className="relative z-10 animate-fade-in">
-      <Card className="bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 rounded-3xl shadow-2xl p-1">
+      <Card className="bg-linear-to-br from-purple-600 via-pink-500 to-orange-400 rounded-3xl shadow-2xl p-1">
         <CardContent className="bg-white rounded-3xl p-10 max-w-3xl w-full">
           {/* Header */}
           <div className="text-center mb-8 animate-slide-up">
             <div className="text-6xl mb-4 animate-bounce-slow">🎉</div>
             <h1
-              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2"
+              className="text-4xl md:text-5xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2"
               style={{
                 fontFamily: 'var(--font-just-me-again-down-here), cursive',
               }}
@@ -30,7 +30,7 @@ export const GreetingContent = ({ name, message, sender }: Props) => {
           </div>
 
           {/* Mensagem */}
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-8 mb-8 shadow-inner">
+          <div className="bg-linear-to-r from-purple-50 to-pink-50 rounded-2xl p-8 mb-8 shadow-inner">
             <blockquote className="text-center text-gray-800 text-lg md:text-xl italic font-semibold leading-relaxed overflow-y-auto max-h-64">
               {message}
             </blockquote>

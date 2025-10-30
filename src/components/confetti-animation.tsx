@@ -6,7 +6,7 @@ import Confetti from 'react-confetti'
 interface ConfettiAnimationProps {
   enabled?: boolean
   infinite?: boolean
-  intensity?: number // novo: controla a quantidade de confete
+  intensity?: number
 }
 
 export function ConfettiAnimation({

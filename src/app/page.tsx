@@ -6,7 +6,6 @@ import { Features } from '../components/features'
 import { Footer } from '../components/footer'
 import { ConfettiAnimation } from '@/components/confetti-animation'
 
-import { Separator } from '@/components/ui/separator'
 import { Card, CardContent } from '@/components/ui/card'
 
 export default function Home() {
