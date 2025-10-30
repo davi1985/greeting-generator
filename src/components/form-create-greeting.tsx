@@ -10,7 +10,6 @@ export type GreetingFormData = {
   whatsapp: string
   message: string
   sender?: string
-  images: File[]
 }
 
 export const FormCreateGreeting = () => {
@@ -93,7 +92,8 @@ export const FormCreateGreeting = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-md p-8 max-w-xl mx-auto flex flex-col gap-6"
+      className="bg-white rounded-lg shadow-md p-6 md:p-8 max-w-2xl mx-auto w-full flex flex-col gap-6"
+      style={{ maxWidth: '600px' }}
     >
       <div>
         <label className="block text-gray-700 font-semibold mb-2">
@@ -149,74 +149,7 @@ export const FormCreateGreeting = () => {
           maxLength={280}
         />
       </div>
-      <div>
-        <label className="block text-gray-700 font-semibold mb-2">
-          Imagens (até 3)
-        </label>
-        <label
-          className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg px-6 py-8 cursor-pointer transition-colors ${
-            dragActive
-              ? 'border-purple-400 bg-purple-50'
-              : 'border-gray-300 bg-gray-50 hover:border-purple-400'
-          }`}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-        >
-          <span className="text-gray-400 text-3xl mb-2">📷</span>
-          <span className="text-gray-600 mb-1">
-            Arraste ou clique para selecionar até 3 imagens
-          </span>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            className="hidden"
-          />
-        </label>
-        {images.length > 0 && (
-          <div className="flex gap-2 mt-4">
-            {images.map((img, i) => {
-              const url = URL.createObjectURL(img)
-              return (
-                <div
-                  key={i}
-                  className="relative w-16 h-16 rounded-lg overflow-hidden border border-gray-200 bg-white flex items-center justify-center group"
-                >
-                  <img
-                    src={url}
-                    alt={img.name}
-                    className="object-cover w-full h-full"
-                    onLoad={() => URL.revokeObjectURL(url)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setImages((prev) => prev.filter((_, idx) => idx !== i))
-                    }
-                    className="absolute top-1 right-1 bg-white bg-opacity-80 rounded-full p-1 text-gray-600 hover:text-red-600 hover:bg-opacity-100 transition-opacity opacity-80 group-hover:opacity-100"
-                    aria-label="Remover imagem"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 8.586l3.536-3.535a1 1 0 111.415 1.415L11.414 10l3.535 3.536a1 1 0 01-1.415 1.415L10 11.414l-3.536 3.535a1 1 0 01-1.415-1.415L8.586 10l-3.535-3.536A1 1 0 016.465 5.05L10 8.586z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
+
       <button
         type="submit"
         className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-purple-700 transition-colors cursor-pointer flex items-center justify-center gap-2"
