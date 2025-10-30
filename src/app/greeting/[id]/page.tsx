@@ -34,10 +34,10 @@ export default async function GreetingPage({
       </main>
     )
   }
+
   const data = await res.json()
   const { name, message, images, sender } = data
-
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const shareUrl = `${baseUrl}/greeting/${id}`
   const whatsappShareMessage = `Olá ${name}, hoje é o seu dia, veja esta felicitação criada para você:\nAcessar: ${shareUrl}`
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(
     whatsappShareMessage
