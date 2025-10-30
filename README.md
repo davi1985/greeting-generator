@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Visão geral do MVP
 
-## Getting Started
+Objetivo:
 
-First, run the development server:
+O usuário acessa o site → cria uma felicitação → escolhe nome, mensagem e até 3 fotos → o sistema gera uma página bonita e única com um link compartilhável → ele pode enviar pelo WhatsApp.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack sugerida
+
+- Camada Tecnologia Observação
+- Frontend Next.js 15 (App Router) UI + geração da página dinâmica
+- Banco Supabase (ou Firebase) Armazena felicitações e fotos
+- Upload de imagens Supabase Storage / UploadThing Fácil integração com Next.js
+- Link único Slug UUID curto (/f/[id]) Identifica a felicitação
+- Envio via WhatsApp API de link direto (https://wa.me/?text=...) Evita precisar de API paga
+- Estilo/layout Tailwind + Framer Motion Layout bonito e leve
+- Deploy Vercel Ideal para Next.js SaaS pequeno
+
+## Estrutura inicial de pastas
+
+/src
+├─ app
+│ ├─ page.tsx # Landing page
+│ ├─ create/page.tsx # Formulário para criar felicitação
+│ └─ f/[id]/page.tsx # Página pública da felicitação
+├─ lib
+│ ├─ supabase.ts # Cliente Supabase
+│ ├─ generateLink.ts # Cria link de compartilhamento
+├─ components
+│ ├─ FormCreateGreeting.tsx
+│ ├─ GreetingCard.tsx
+│ └─ ImageUploader.tsx
+├─ types
+│ └─ greeting.ts
+
+## Modelo de dados (greetings)
+
+```ts
+interface Greeting {
+  id: string
+  name: string
+  message: string
+  images: string[] // URLs das fotos
+  slug: string // ex: 'feliz-aniversario-joao'
+  createdAt: string
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Fluxo do usuário (MVP)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Página /create
+→ Formulário: nome, mensagem, upload de até 3 fotos.
+→ Ao enviar, salva no banco e gera slug/UUID.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Redireciona para /f/[slug]
+→ Renderiza layout com confetes, mensagem e fotos.
 
-## Learn More
+Botão “Compartilhar via WhatsApp”
+→ Gera link automático:
+https://wa.me/?text=Veja sua surpresa! https://meusite.com/f/slug
 
-To learn more about Next.js, take a look at the following resources:
+## Layout básico da página de felicitação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Exemplo visual:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🎉 Feliz aniversário, João! 🎂
+💌 "Desejo tudo de bom, muita saúde e sucesso!"
+📸 [foto1] [foto2] [foto3]
+✨ Compartilhado com carinho via [Seu SaaS]
 
-## Deploy on Vercel
+Animações:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- react-confetti ou canvas-confetti
+- framer-motion para transições suaves
+- @react-three/fiber (versão premium) para 3D backgrounds, se quiser evoluir
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Versão futura (para monetizar)
+
+Depois do MVP, você pode:
+
+- Criar login via Google/Facebook → guardar felicitações dos usuários.
+- Adicionar planos pagos (Stripe) → ex: planos com mais fotos, vídeos ou templates premium.
+- Adicionar templates editáveis (como Canva Lite).
+- Permitir custom domain (joao.felicita.me).
+
+## Próximos passos práticos
+
+Posso te ajudar com isso em camadas:
+
+- Criar o esqueleto inicial do projeto Next.js com rotas /create e /f/[id].
+- Adicionar upload de imagem (com Supabase ou UploadThing).
+- Implementar geração e compartilhamento de link via WhatsApp.
+- Adicionar layout de cartão com animação.
