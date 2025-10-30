@@ -3,38 +3,40 @@
 import { useEffect, useState } from 'react'
 import Confetti from 'react-confetti'
 
-type ConfettiAnimationProps = {
-  infinite?: boolean
+interface ConfettiAnimationProps {
   enabled?: boolean
+  infinite?: boolean
+  intensity?: number // novo: controla a quantidade de confete
 }
 
-export const ConfettiAnimation = ({
-  infinite = false,
+export function ConfettiAnimation({
   enabled = true,
-}: ConfettiAnimationProps) => {
-  const [size, setSize] = useState({ width: 1920, height: 1080 })
+  infinite = false,
+  intensity = 180,
+}: ConfettiAnimationProps) {
+  const [size, setSize] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
-    const handleResize = () => {
+    // Ajusta o tamanho inicial e atualiza ao redimensionar
+    const updateSize = () =>
       setSize({ width: window.innerWidth, height: window.innerHeight })
-    }
 
-    handleResize()
-
-    window.addEventListener('resize', handleResize)
-
-    return () => window.removeEventListener('resize', handleResize)
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
   }, [])
 
-  if (!enabled) return null
+  if (!enabled || size.width === 0) return null
 
   return (
     <Confetti
       width={size.width}
       height={size.height}
-      numberOfPieces={180}
+      numberOfPieces={intensity}
       recycle={infinite}
       gravity={0.25}
+      wind={0.005}
+      colors={['#A855F7', '#EC4899', '#F97316', '#FDE68A']}
     />
   )
 }
