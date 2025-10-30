@@ -5,7 +5,7 @@ export const Features = () => (
     <FeatureCard
       icon="💝"
       title="Personalizado"
-      description="Adicione sua mensagem e até 3 fotos especiais"
+      description="Adicione sua mensagem para a pessoa especial"
     />
     <FeatureCard
       icon="🎨"

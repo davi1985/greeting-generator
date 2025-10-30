@@ -3,28 +3,35 @@ import { db } from '@/lib/firebase'
 import { collection, addDoc, doc, getDoc } from 'firebase/firestore'
 
 export async function POST(req: NextRequest) {
-  const formData = await req.formData()
-  const jsonField = formData.get('json')
-  console.log('jsonField:', jsonField)
+  try {
+    const json = await req.json()
+    const { name, whatsapp, message, sender } = json
 
-  if (!jsonField || typeof jsonField !== 'string') {
+    console.log('Dados recebidos:', { name, whatsapp, message, sender })
+
+    if (!name || !whatsapp || !message) {
+      return NextResponse.json(
+        { error: 'Campos obrigatórios ausentes: name, whatsapp, message' },
+        { status: 400 }
+      )
+    }
+
+    const docRef = await addDoc(collection(db, 'greetings'), {
+      name,
+      whatsapp,
+      message,
+      sender,
+      createdAt: new Date(),
+    })
+
+    return NextResponse.json({ id: docRef.id })
+  } catch (err) {
+    console.error('Erro ao salvar felicitação:', err)
     return NextResponse.json(
-      { error: 'Campo json ausente ou inválido' },
-      { status: 400 }
+      { error: 'Erro ao salvar felicitação' },
+      { status: 500 }
     )
   }
-  const json = JSON.parse(jsonField)
-  const { name, whatsapp, message, sender } = json
-
-  const docRef = await addDoc(collection(db, 'greetings'), {
-    name,
-    whatsapp,
-    message,
-    sender,
-    createdAt: new Date(),
-  })
-
-  return NextResponse.json({ id: docRef.id })
 }
 
 export async function GET(req: NextRequest) {

@@ -17,65 +17,18 @@ export const FormCreateGreeting = () => {
   const [whatsapp, setWhatsapp] = useState('')
   const [message, setMessage] = useState('')
   const [sender, setSender] = useState('')
-  const [images, setImages] = useState<File[]>([])
-  const [dragActive, setDragActive] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!e.target.files) return
-    const newFiles = Array.from(e.target.files)
-    setImages((prev) => {
-      const combined = [...prev, ...newFiles].slice(0, 3)
-
-      return combined.filter(
-        (file, idx, arr) =>
-          arr.findIndex((f) => f.name === file.name && f.size === file.size) ===
-          idx
-      )
-    })
-  }
-
-  function handleDrop(e: React.DragEvent<HTMLLabelElement>) {
-    e.preventDefault()
-    setDragActive(false)
-    if (e.dataTransfer.files) {
-      const newFiles = Array.from(e.dataTransfer.files)
-      setImages((prev) => {
-        const combined = [...prev, ...newFiles].slice(0, 3)
-        return combined.filter(
-          (file, idx, arr) =>
-            arr.findIndex(
-              (f) => f.name === file.name && f.size === file.size
-            ) === idx
-        )
-      })
-    }
-  }
-
-  function handleDragOver(e: React.DragEvent<HTMLLabelElement>) {
-    e.preventDefault()
-    setDragActive(true)
-  }
-
-  function handleDragLeave(e: React.DragEvent<HTMLLabelElement>) {
-    e.preventDefault()
-    setDragActive(false)
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     try {
-      const formData = new FormData()
-      formData.append(
-        'json',
-        JSON.stringify({ name, whatsapp, message, sender })
-      )
-      images.forEach((img) => formData.append('images', img))
-
       const res = await fetch('/api/greeting', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, whatsapp, message, sender }),
       })
       const data = await res.json()
       setLoading(false)
@@ -113,12 +66,13 @@ export const FormCreateGreeting = () => {
           Seu Nome (opcional)
         </label>
         <input
-          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+          className="w-full border border-gray-300 rounded-lg px-4 py-4 text-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-500"
           type="text"
           value={sender}
           onChange={(e) => setSender(e.target.value)}
           maxLength={40}
           placeholder="Quem está enviando?"
+          style={{ fontSize: '16px' }}
         />
       </div>
       <div>
@@ -126,7 +80,7 @@ export const FormCreateGreeting = () => {
           WhatsApp do Destinatário
         </label>
         <input
-          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-300"
+          className="w-full border border-gray-300 rounded-lg px-4 py-4 text-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-green-300 placeholder-gray-500"
           type="tel"
           placeholder="(99) 99999-9999"
           value={whatsapp}
@@ -141,12 +95,14 @@ export const FormCreateGreeting = () => {
           Mensagem
         </label>
         <textarea
-          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+          className="w-full border border-gray-300 rounded-lg px-4 py-4 text-lg text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-gray-500 resize-none"
+          rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          rows={4}
-          required
           maxLength={280}
+          placeholder="Escreva sua mensagem de aniversário aqui..."
+          required
+          style={{ fontSize: '16px' }}
         />
       </div>
 

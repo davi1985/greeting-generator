@@ -4,7 +4,6 @@ import Link from 'next/link'
 export default function CreateGreetingPage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-purple-50 to-pink-50 py-16 px-4 relative">
-      {/* Botão flutuante voltar para home */}
       <Link
         href="/"
         className="fixed top-6 right-6 bg-white text-purple-600 p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center"
