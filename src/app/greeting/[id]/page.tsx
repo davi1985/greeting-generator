@@ -19,7 +19,7 @@ export default async function GreetingPage({
         <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full flex flex-col gap-4 items-center">
           <span className="text-6xl mb-2">💌</span>
           <h1 className="text-2xl font-bold text-gray-800">
-            Ops! Felicitação não encontrada
+            Ops! Mensagem não encontrada
           </h1>
           <p className="text-gray-600 text-center">
             Verifique se o link está correto ou tente novamente mais tarde.
@@ -28,7 +28,7 @@ export default async function GreetingPage({
             href="/create"
             className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
           >
-            Deseja criar uma nova felicitação?
+            Deseja criar uma nova mensagem?
           </a>
         </div>
       </main>
@@ -38,7 +38,7 @@ export default async function GreetingPage({
   const data = await res.json()
   const { name, message, sender } = data
   const shareUrl = `${baseUrl}/hello?id=${id}`
-  const whatsappShareMessage = `Olá ${name}, hoje é o seu dia, veja esta felicitação criada para você:\nAcessar: ${shareUrl}`
+  const whatsappShareMessage = `Olá ${name}, hoje é o seu dia, veja esta linda mensagem criada para você:\nAcessar: ${shareUrl}`
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(
     whatsappShareMessage
   )}`

@@ -6,14 +6,14 @@ export const Navigation = () => (
       <div className="flex items-center gap-2">
         <div className="text-2xl">🎊</div>
         <h1 className="text-xl font-bold text-purple-600">
-          SarahDay - Felicitações Especiais
+          SarahDay - Mensagens Especiais
         </h1>
       </div>
       <Link
         href="/create"
         className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
       >
-        Criar Felicitação
+        Criar Mensagem
       </Link>
     </div>
   </nav>

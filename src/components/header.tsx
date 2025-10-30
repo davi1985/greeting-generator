@@ -13,7 +13,7 @@ export const Header = () => (
       href="/create"
       className="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors shadow-lg"
     >
-      Criar Felicitação Agora →
+      Criar Mensagem Agora →
     </Link>
   </div>
 )
