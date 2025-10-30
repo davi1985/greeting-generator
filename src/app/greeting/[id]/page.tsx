@@ -5,9 +5,9 @@ import { ConfettiAnimation } from '@/components/confetti-animation'
 export default async function GreetingPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const { id } = params
+  const { id } = await params
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
   const res = await fetch(`${baseUrl}/api/greeting?id=${id}`, {
     cache: 'no-store',

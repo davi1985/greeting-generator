@@ -24,11 +24,23 @@ export async function POST(req: NextRequest) {
   await mkdir(uploadDir, { recursive: true })
 
   for (const file of files) {
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const filename = `${Date.now()}_${file.name}`
-    const filepath = join(uploadDir, filename)
-    await writeFile(filepath, buffer)
-    urls.push(`/uploads/${filename}`)
+    // Validar se é uma imagem
+    if (!file.type.startsWith('image/')) {
+      console.log(`Arquivo inválido: ${file.name} (${file.type})`)
+      continue // Pular arquivos que não são imagens
+    }
+
+    try {
+      const buffer = Buffer.from(await file.arrayBuffer())
+      const filename = `${Date.now()}_${file.name}`
+      const filepath = join(uploadDir, filename)
+      await writeFile(filepath, buffer)
+      urls.push(`/uploads/${filename}`)
+      console.log(`Imagem salva: ${filename}`)
+    } catch (error) {
+      console.error(`Erro ao salvar ${file.name}:`, error)
+      continue // Continuar com outros arquivos
+    }
   }
 
   const docRef = await addDoc(collection(db, 'greetings'), {
