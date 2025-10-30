@@ -132,7 +132,7 @@ export const FormCreateGreeting = () => {
             />
           </svg>
         )}
-        {loading ? 'Salvando...' : 'Criar Felicitação'}
+        {loading ? 'Salvando...' : 'Criar mensagem'}
       </button>
     </form>
   )
