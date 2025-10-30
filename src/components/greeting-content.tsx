@@ -55,7 +55,7 @@ export const GreetingContent = ({ name, message, sender }: Props) => {
                   href="/create"
                   className="underline hover:text-purple-500 transition"
                 >
-                  Deseja criar uma message para alguém?
+                  Vamos criar uma mensagem ?
                 </a>
               </div>
             </div>
