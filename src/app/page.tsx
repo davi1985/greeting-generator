@@ -14,7 +14,7 @@ export default function Home() {
         <Features />
       </main>
 
-      <ConfettiAnimation enabled={true} infinite={true} />
+      <ConfettiAnimation enabled={true} infinite={false} />
       <Footer />
     </div>
   )
